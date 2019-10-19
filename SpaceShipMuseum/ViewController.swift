@@ -7,7 +7,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var planetNames = ["earth", "saturn"]
     var curr_time = 0
     var nodePositions: [String : SCNVector3] = [:]
-    var nodeAngles : [String: Double] = ["moon": 0]
+    var nodeAngles : [String: Double] = ["earth": 0]
     var refPositions : [String: SCNVector3] = [:]
     var cameraPosition = SCNVector3()
 
@@ -63,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
             plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0)
             let planeNode = SCNNode(geometry: plane)
-            planeNode.eulerAngles.x = -.pi / 2
+            planeNode.eulerAngles.x = -.pi/2
             planeNode.name = imageAnchor.name! + "_plane"
 
             let planetScene = SCNScene(named: "art.scnassets/ship_sphere.scn")!
@@ -71,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
             if imageAnchor.name! == "sun" {
                 planetNode = planetScene.rootNode.childNodes[1]
-            } else if imageAnchor.name! == "moon" {
+            } else if imageAnchor.name! == "earth" {
                 planetNode = planetScene.rootNode.childNodes[2]
                 // TODO: Need to add physics and have it interact with sun
             }
@@ -107,13 +107,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func setNewPosition (planetName: String, constant: Float) {
-        let planetDistance = GLKVector3Distance(
-            SCNVector3ToGLKVector3(refPositions[planetName + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
-        ) - 0.1
-        let rotationalRadians = sqrt(constant/planetDistance)
-        nodeAngles[planetName]! += Double(rotationalRadians)
-        nodePositions[planetName]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles[planetName]!))
-        nodePositions[planetName]!.y = nodePositions["sun"]!.y + planetDistance * Float(sin(nodeAngles[planetName]!))
+        if refPositions[planetName + "_plane"] != nil && refPositions["sun_plane"] != nil {
+            let planetDistance = GLKVector3Distance(
+                SCNVector3ToGLKVector3(refPositions[planetName + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
+            ) - 0.2
+            let rotationalRadians = sqrt(constant/planetDistance)
+            nodeAngles[planetName]! += Double(rotationalRadians)
+            nodePositions[planetName]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles[planetName]!))
+            nodePositions[planetName]!.z = nodePositions["sun"]!.z + planetDistance * Float(sin(nodeAngles[planetName]!))
+            print(nodePositions[planetName])
+        }
     }
 
 
@@ -124,38 +127,36 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         curr_time += 1
         
-        if currNode.name != nil {
-            nodePositions[currNode.name!] = currNode.worldPosition
-        }
-        if refNode.name != nil {
-            refPositions[refNode.name!] = refNode.worldPosition
-        }
 //        let planetDistance = GLKVector3Distance(nodePositions["moon"]!, nodePositions["sun"]!)
-        
-        if currNode.name != nil && currNode.name! == "moon" {
-            if nodePositions["sun"] != nil {
-                setNewPosition(planetName: "moon", constant: 0.00172665)
+        if let imageAnchor = anchor as? ARImageAnchor {
+            if !imageAnchor.isTracked {
+                currNode.isHidden = true
+                nodePositions[currNode.name!] = nil
+                refPositions[refNode.name!] = nil
+                currNode.position = SCNVector3Zero
+                currNode.position.z = 0.15
+            } else {
+                currNode.isHidden = false
+                if currNode.name != nil {
+                    nodePositions[currNode.name!] = currNode.worldPosition
+                }
+                if refNode.name != nil {
+                    refPositions[refNode.name!] = refNode.worldPosition
+                }
+                
+                if currNode.name != nil && currNode.name! == "earth" {
+                    if nodePositions["sun"] != nil {
+                        setNewPosition(planetName: "earth", constant: 0.00172665)
 
-                currNode.worldPosition = nodePositions["moon"]!
-                currNode.worldPosition.z = nodePositions["sun"]!.z
+                        currNode.worldPosition = nodePositions["earth"]!
+                    }
+                }
             }
         }
-
-        if currNode.name != nil && currNode.name == "sun" {
-            
-        }
-
 //        if curr_time % 10 == 0 {
 //            if (nodePositions["moon"] != nil && nodePositions["sun"] != nil) {
 //                print ("Distance:" + String(GLKVector3Distance(SCNVector3ToGLKVector3(nodePositions["moon"]!), SCNVector3ToGLKVector3(nodePositions["sun"]!))))
 //            }
 //        }
-        if let imageAnchor = anchor as? ARImageAnchor {
-            if !imageAnchor.isTracked {
-                currNode.isHidden = true
-            } else {
-                currNode.isHidden = false
-            }
-        }
     }
 }
