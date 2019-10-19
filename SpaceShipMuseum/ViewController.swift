@@ -91,10 +91,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let planetScene = SCNScene(named: "art.scnassets/ship_sphere.scn")!
             var planetNode: SCNNode?
             planetNode = planetScene.rootNode.childNodes[planetProps[imageAnchor.name!]!["index"]!]
+            
+            let title = "name: " + imageAnchor.name!
+            let titleText = SCNText(string: title, extrusionDepth: 0.1)
+            titleText.font = UIFont.systemFont(ofSize: 1)
+            titleText.flatness = 0.005
+            let titleNode = SCNNode(geometry: titleText)
+            let fontScale: Float = 0.01
+            titleNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+            titleNode.position = SCNVector3Zero
+            titleNode.position.z  = 0.02
+            
             planetNode!.name = imageAnchor.name!
             planetNode!.position = SCNVector3Zero
             planetNode!.position.z = 0.15
             planeNode.addChildNode(planetNode!)
+            planeNode.addChildNode(titleNode)
             node.addChildNode(planeNode)
         }
         
