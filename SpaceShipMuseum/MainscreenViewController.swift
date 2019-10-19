@@ -14,7 +14,6 @@ class MainscreenViewController: UIViewController {
     @IBOutlet weak var buttonProps: UIButton!
     
     override func viewDidLoad() {
-        buttonProps.contentCompressionResistancePriority(for: <#T##NSLayoutConstraint.Axis#>)
     }
     
 }

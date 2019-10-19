@@ -9,7 +9,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodeAngles : [String: Double] = ["earth": 0]
     var refPositions : [String: SCNVector3] = [:]
     var cameraPosition = SCNVector3()
-
+    
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -17,7 +18,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the view's delegate
         sceneView.delegate = self
-        
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(rec:)))
+        sceneView.addGestureRecognizer(tap)
+
         // Create a new scene
         let scene = SCNScene(named: "art.scnassets/GameScene.scn")!
         
@@ -52,6 +56,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
+    // MARK: - GestureRecogniser
+    @objc func handleTap(rec: UITapGestureRecognizer){
+        if rec.state == .ended {
+            let location: CGPoint = rec.location(in: sceneView)
+            let hits = self.sceneView.hitTest(location, options: nil)
+        
+            if !hits.isEmpty{
+                let tappedNode = hits.first?.node
+                let settingStoryboard: UITableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "setting") as UITableViewController
+                self.present(settingStoryboard, animated: true, completion: nil)
+            }
+        }
+    }
+    
     // MARK: - ARSCNViewDelegate
         
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {

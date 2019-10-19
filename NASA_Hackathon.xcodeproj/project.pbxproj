@@ -14,6 +14,8 @@
 		527951D720CC07A100B9119D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 527951D620CC07A100B9119D /* Assets.xcassets */; };
 		527951DA20CC07A100B9119D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527951D820CC07A100B9119D /* LaunchScreen.storyboard */; };
 		BA06792F235B2B7600567A41 /* MainscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA06792E235B2B7600567A41 /* MainscreenViewController.swift */; };
+		BA067931235B743000567A41 /* PlanetSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA067930235B743000567A41 /* PlanetSettingViewController.swift */; };
+		BA067933235B7D4E00567A41 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		527951D920CC07A100B9119D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		527951DB20CC07A100B9119D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA06792E235B2B7600567A41 /* MainscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainscreenViewController.swift; sourceTree = "<group>"; };
+		BA067930235B743000567A41 /* PlanetSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetSettingViewController.swift; sourceTree = "<group>"; };
+		BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +65,9 @@
 				527951CD20CC07A000B9119D /* AppDelegate.swift */,
 				527951CF20CC07A000B9119D /* art.scnassets */,
 				527951D120CC07A000B9119D /* ViewController.swift */,
+				BA067930235B743000567A41 /* PlanetSettingViewController.swift */,
 				527951D320CC07A000B9119D /* Main.storyboard */,
+				BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */,
 				BA06792E235B2B7600567A41 /* MainscreenViewController.swift */,
 				527951D620CC07A100B9119D /* Assets.xcassets */,
 				527951D820CC07A100B9119D /* LaunchScreen.storyboard */,
@@ -143,8 +149,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA06792F235B2B7600567A41 /* MainscreenViewController.swift in Sources */,
+				BA067933235B7D4E00567A41 /* SettingsTableViewController.swift in Sources */,
 				527951D220CC07A000B9119D /* ViewController.swift in Sources */,
 				527951CE20CC07A000B9119D /* AppDelegate.swift in Sources */,
+				BA067931235B743000567A41 /* PlanetSettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,7 +229,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -275,7 +283,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -289,13 +297,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 76TEJDZD6D;
+				DEVELOPMENT_TEAM = LK4QVF8U4X;
 				INFOPLIST_FILE = SpaceShipMuseum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse;
+				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse.lin;
 				PRODUCT_NAME = "NASA Space App";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -307,13 +315,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 76TEJDZD6D;
+				DEVELOPMENT_TEAM = LK4QVF8U4X;
 				INFOPLIST_FILE = SpaceShipMuseum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse;
+				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse.lin;
 				PRODUCT_NAME = "NASA Space App";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
