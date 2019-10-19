@@ -178,13 +178,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 }
                 
                 if (imageAnchor.name != "sun") {
-                    let planetTemp = 45
+                    let temp = 45 // TODO: inverse square law
                     var detail = ""
                     for (_, element) in selectedElements {
-                        detail += element["name"]! + "\n"
-                        detail += "boiling point: " + element["boiling"]! + "\n"
-                        detail += "melting point: " + element["melting"]! + "\n"
-                        detail += "\n"
+                        var state = ""
+                        let bp = Int(element["boiling"]!)
+                        let mp = Int(element["melting"]!)
+                        if (temp < mp!) {
+                            state = "solid"
+                        } else if (temp >= mp! && temp < bp!) {
+                            state = "liquid"
+                        } else {
+                            state = "gas"
+                        }
+                        detail += element["name"]! + ": " + state + "\n"
                     }
                     let detailText = SCNText(string: detail, extrusionDepth: 0.1)
                     detailText.font = UIFont.systemFont(ofSize: 1)
@@ -194,7 +201,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     detailNode.scale = SCNVector3(fontScale, fontScale, fontScale)
                     detailNode.position = SCNVector3Zero
                     detailNode.position.z  = 0.02
-                    detailNode.position.y = -0.1
+                    detailNode.position.y = -0.02
                     refNode.addChildNode(detailNode)
                 }
                 
