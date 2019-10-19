@@ -108,6 +108,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planetNode!.position.z = 0.15
             planeNode.addChildNode(planetNode!)
             planeNode.addChildNode(titleNode)
+            let detailText = SCNText(string: "", extrusionDepth: 0.1)
+            detailText.font = UIFont.systemFont(ofSize: 1)
+            detailText.flatness = 0.005
+            let detailNode = SCNNode(geometry: detailText)
+            detailNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+            detailNode.position = SCNVector3Zero
+            detailNode.position.z  = 0.02
+            detailNode.position.y = -0.02
+            planeNode.addChildNode(detailNode)
             
             node.addChildNode(planeNode)
         }
@@ -146,20 +155,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Each plane will only contain a single node
         let currNode = node.childNodes[0].childNodes[0]
         let refNode = node.childNodes[0]
+        let detailNode = refNode.childNodes[2] // 2 is the detail node
 
         curr_time += 1
         
 //        let planetDistance = GLKVector3Distance(nodePositions["moon"]!, nodePositions["sun"]!)
         if let imageAnchor = anchor as? ARImageAnchor {
             if !imageAnchor.isTracked {
-                currNode.isHidden = true
+                refNode.isHidden = true
                 // Delete the previous points and reset the position
                 nodePositions[currNode.name!] = nil
                 refPositions[refNode.name!] = nil
                 currNode.position = SCNVector3Zero
                 currNode.position.z = 0.15
             } else {
-                currNode.isHidden = false
+                refNode.isHidden = false
                 if currNode.name != nil {
                     nodePositions[currNode.name!] = currNode.worldPosition
                 }
@@ -171,10 +181,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         setNewPosition(planetName: "earth", constant: 0.00172665)
                         currNode.worldPosition = nodePositions["earth"]!
                     }
-                    
-                    if currNode.name != nil && currNode.name! == "saturn" {
-                        // TODO: Hardcode it here
-                    }
                 }
                 
                 if (imageAnchor.name != "sun") {
@@ -185,7 +191,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         )
                         temp = Int(1000/pow(planetDistance, 2))
                     }
-                    var detail = ""
+                    var detail = "temperature: " + String(temp) + "\n"
                     for (_, element) in selectedElements {
                         var state = ""
                         let bp = Int(element["boiling"]!)
@@ -202,13 +208,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     let detailText = SCNText(string: detail, extrusionDepth: 0.1)
                     detailText.font = UIFont.systemFont(ofSize: 1)
                     detailText.flatness = 0.005
-                    let detailNode = SCNNode(geometry: detailText)
-                    let fontScale: Float = 0.01
-                    detailNode.scale = SCNVector3(fontScale, fontScale, fontScale)
-                    detailNode.position = SCNVector3Zero
-                    detailNode.position.z  = 0.02
-                    detailNode.position.y = -0.02
-                    refNode.addChildNode(detailNode)
+                    detailNode.geometry = detailText
                 }
                 
 

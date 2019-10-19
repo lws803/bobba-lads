@@ -15,8 +15,8 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         elementDict.append([
             "name":"element1",
-            "melting": "1",
-            "boiling": "2"
+            "melting": "7000",
+            "boiling": "9000"
         ])
         elementDict.append([
             "name":"element2",

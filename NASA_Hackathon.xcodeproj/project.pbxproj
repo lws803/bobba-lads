@@ -297,13 +297,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LK4QVF8U4X;
+				DEVELOPMENT_TEAM = 76TEJDZD6D;
 				INFOPLIST_FILE = SpaceShipMuseum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse.lin;
+				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse;
 				PRODUCT_NAME = "NASA Space App";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,13 +315,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LK4QVF8U4X;
+				DEVELOPMENT_TEAM = 76TEJDZD6D;
 				INFOPLIST_FILE = SpaceShipMuseum/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse.lin;
+				PRODUCT_BUNDLE_IDENTIFIER = nasa.spaceapp.sfbesthouse;
 				PRODUCT_NAME = "NASA Space App";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
