@@ -45,9 +45,9 @@ class SettingsTableViewController: UITableViewController {
         let elementLabel : UILabel = cell.contentView.viewWithTag(1) as! UILabel
         let meltingLabel : UILabel = cell.contentView.viewWithTag(2) as! UILabel
         let boilingLabel : UILabel = cell.contentView.viewWithTag(3) as! UILabel
-        elementLabel.text = elementDict[indexPath.item]["name"]
-        meltingLabel.text = elementDict[indexPath.item]["melting"]
-        boilingLabel.text = elementDict[indexPath.item]["boiling"]
+        elementLabel.text = "name: " + elementDict[indexPath.item]["name"]!
+        meltingLabel.text = "melting point: " + elementDict[indexPath.item]["melting"]!
+        boilingLabel.text = "boiling point: " + elementDict[indexPath.item]["boiling"]!
         return cell
     }
     
