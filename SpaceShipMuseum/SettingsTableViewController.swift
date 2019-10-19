@@ -13,22 +13,40 @@ class SettingsTableViewController: UITableViewController {
     var selectedElements : [Int: Dictionary<String, String>] = [:]
     
     override func viewDidLoad() {
-        elementDict.append([
-            "name":"element1",
-            "melting": "7000",
-            "boiling": "9000"
-        ])
-        elementDict.append([
-            "name":"element2",
-            "melting": "12",
-            "boiling": "23"
-        ])
         self.tableView.allowsMultipleSelection = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // call JJ's endpoint
         // process the json into dict by element name
+        // https://nasa-server.herokuapp.com/external/v1/compounds/get
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: .main)
+        let url = URL(string: "https://nasa-server.herokuapp.com/external/v1/compounds/get")!
+        let task = session.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            // Parse the data in the response and use it
+            do {
+                let serialized_data = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [[String: Any]]
+                
+                print(serialized_data)
+                self.elementDict = []
+                for item in serialized_data {
+                    let compoundName = item["name"] as! String
+                    let melting = Double(String(item["melting_point"] as! NSString))! + 273
+                    let boiling = Double(String(item["boiling_point"] as! NSString))! + 273
+                    
+
+                    self.elementDict.append([
+                        "name": compoundName,
+                        "melting": String(format: "%.0f", melting),
+                        "boiling": String(format: "%.0f", boiling)
+                    ])
+                }
+                self.tableView.reloadData()
+            } catch let error as NSError {
+                print(error)
+            }
+        })
+        task.resume()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

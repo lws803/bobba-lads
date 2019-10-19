@@ -194,7 +194,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         let planetDistance = GLKVector3Distance(
                             SCNVector3ToGLKVector3(refPositions[imageAnchor.name! + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
                         )
-                        temp = Int(1000/pow(planetDistance, 2))
+                        temp = Int(30/pow(planetDistance, 2))
                     }
                     var detail = "temperature: " + String(temp) + "\n"
                     for (_, element) in selectedElements {
