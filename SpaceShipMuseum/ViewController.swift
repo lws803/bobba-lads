@@ -8,6 +8,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var curr_time = 0
     var nodePositions: [String : SCNVector3] = [:]
     var nodeAngles : [String: Double] = ["moon": 0]
+    var refPositions : [String: SCNVector3] = [:]
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -59,10 +60,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         if let imageAnchor = anchor as? ARImageAnchor {
             let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
-            plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0.8)
+            plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0)
             let planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi / 2
-            planeNode.name = imageAnchor.name! + " plane"
+            planeNode.name = imageAnchor.name! + "_plane"
 
             let planetScene = SCNScene(named: "art.scnassets/ship_sphere.scn")!
             var planetNode: SCNNode?
@@ -99,6 +100,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Each plane will only contain a single node
 //        print(node.childNodes[0].childNodes[0].name)
         let currNode = node.childNodes[0].childNodes[0]
+        let refNode = node.childNodes[0]
 //        if (currNode.name == "moon") {
 //            currNode.runAction(SCNAction.move(by: SCNVector3Make(0.1, 0, 0), duration: 30))
 //        }
@@ -107,21 +109,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if currNode.name != nil {
             nodePositions[currNode.name!] = currNode.worldPosition
         }
+        if refNode.name != nil {
+            refPositions[refNode.name!] = refNode.worldPosition
+        }
 //        let planetDistance = GLKVector3Distance(nodePositions["moon"]!, nodePositions["sun"]!)
         
         if currNode.name != nil && currNode.name! == "moon" {
             if nodePositions["sun"] != nil {
                 let planetDistance = GLKVector3Distance(
-                    SCNVector3ToGLKVector3(nodePositions["moon"]!), SCNVector3ToGLKVector3(nodePositions["sun"]!)
-                )
+                    SCNVector3ToGLKVector3(refPositions["moon_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
+                ) - 0.2
+                
                 let factor = 0.0872665
                 nodeAngles["moon"]! += factor
                 // TODO: Rely on factor and planetDistance
+//                print (log2(planetDistance*10))
 
-                nodePositions["moon"]!.x = nodePositions["sun"]!.x + 0.1 * Float(cos(nodeAngles["moon"]!))
-                nodePositions["moon"]!.y = nodePositions["sun"]!.y + 0.1 * Float(sin(nodeAngles["moon"]!))
+                nodePositions["moon"]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles["moon"]!))
+                nodePositions["moon"]!.y = nodePositions["sun"]!.y + planetDistance * Float(sin(nodeAngles["moon"]!))
                 currNode.worldPosition = nodePositions["moon"]!
                 currNode.worldPosition.z = nodePositions["sun"]!.z
+                print (currNode.worldPosition)
             }
         }
 
