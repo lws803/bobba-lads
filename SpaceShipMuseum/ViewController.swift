@@ -9,6 +9,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodePositions: [String : SCNVector3] = [:]
     var nodeAngles : [String: Double] = ["moon": 0]
     var refPositions : [String: SCNVector3] = [:]
+    var cameraPosition = SCNVector3()
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -95,7 +96,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
     }
-    
+
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        // Do something with the new transform
+        cameraPosition = SCNVector3(
+            frame.camera.transform.columns.3.x,
+            frame.camera.transform.columns.3.y,
+            frame.camera.transform.columns.3.z
+        )
+    }
+
+
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         // Each plane will only contain a single node
 //        print(node.childNodes[0].childNodes[0].name)
@@ -120,8 +131,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     SCNVector3ToGLKVector3(refPositions["moon_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
                 ) - 0.2
                 
-                let factor = 0.0872665
-                nodeAngles["moon"]! += factor
+                let rotationalRadians = sqrt(0.00172665/planetDistance)
+//                let cameraDistance = GLKVector3Distance(
+//                    SCNVector3ToGLKVector3(cameraPosition), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
+//                )
+
+                nodeAngles["moon"]! += Double(rotationalRadians)
                 // TODO: Rely on factor and planetDistance
 //                print (log2(planetDistance*10))
 
@@ -129,7 +144,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 nodePositions["moon"]!.y = nodePositions["sun"]!.y + planetDistance * Float(sin(nodeAngles["moon"]!))
                 currNode.worldPosition = nodePositions["moon"]!
                 currNode.worldPosition.z = nodePositions["sun"]!.z
-                print (currNode.worldPosition)
             }
         }
 
