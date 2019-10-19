@@ -3,8 +3,7 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-    // TODO: Store a global set of planet positions, to be parsed and used to update the planet nodes
-    var planetNames = ["earth", "saturn"]
+    var planetProps = ["earth": ["index": 2], "sun": ["index": 1]]
     var curr_time = 0
     var nodePositions: [String : SCNVector3] = [:]
     var nodeAngles : [String: Double] = ["earth": 0]
@@ -68,24 +67,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
             let planetScene = SCNScene(named: "art.scnassets/ship_sphere.scn")!
             var planetNode: SCNNode?
-
-            if imageAnchor.name! == "sun" {
-                planetNode = planetScene.rootNode.childNodes[1]
-            } else if imageAnchor.name! == "earth" {
-                planetNode = planetScene.rootNode.childNodes[2]
-                // TODO: Need to add physics and have it interact with sun
-            }
+            planetNode = planetScene.rootNode.childNodes[planetProps[imageAnchor.name!]!["index"]!]
             planetNode!.name = imageAnchor.name!
             planetNode!.position = SCNVector3Zero
             planetNode!.position.z = 0.15
-
-
-//            let orbitAction = SCNAction.rotate(by: .pi, around: planetNode.position, duration: 1)
-//            let repeatForever = SCNAction.repeatForever(orbitAction)
-//            earthNode.runAction(repeatForever)
-            // TODO: Find out how to execute node animations here
             planeNode.addChildNode(planetNode!)
-//            planeNode.addChildNode(earthNode)
             node.addChildNode(planeNode)
         }
         
@@ -110,12 +96,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if refPositions[planetName + "_plane"] != nil && refPositions["sun_plane"] != nil {
             let planetDistance = GLKVector3Distance(
                 SCNVector3ToGLKVector3(refPositions[planetName + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
-            ) - 0.2
+            )
             let rotationalRadians = sqrt(constant/planetDistance)
             nodeAngles[planetName]! += Double(rotationalRadians)
             nodePositions[planetName]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles[planetName]!))
             nodePositions[planetName]!.z = nodePositions["sun"]!.z + planetDistance * Float(sin(nodeAngles[planetName]!))
-            print(nodePositions[planetName])
         }
     }
 
@@ -131,6 +116,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if let imageAnchor = anchor as? ARImageAnchor {
             if !imageAnchor.isTracked {
                 currNode.isHidden = true
+                // Delete the previous points and reset the position
                 nodePositions[currNode.name!] = nil
                 refPositions[refNode.name!] = nil
                 currNode.position = SCNVector3Zero
@@ -143,20 +129,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 if refNode.name != nil {
                     refPositions[refNode.name!] = refNode.worldPosition
                 }
-                
-                if currNode.name != nil && currNode.name! == "earth" {
-                    if nodePositions["sun"] != nil {
+                if nodePositions["sun"] != nil {
+                    if currNode.name != nil && currNode.name! == "earth" {
                         setNewPosition(planetName: "earth", constant: 0.00172665)
-
                         currNode.worldPosition = nodePositions["earth"]!
                     }
+                    
+                    if currNode.name != nil && currNode.name! == "saturn" {
+                        // TODO: Hardcode it here
+                    }
                 }
+
             }
         }
-//        if curr_time % 10 == 0 {
-//            if (nodePositions["moon"] != nil && nodePositions["sun"] != nil) {
-//                print ("Distance:" + String(GLKVector3Distance(SCNVector3ToGLKVector3(nodePositions["moon"]!), SCNVector3ToGLKVector3(nodePositions["sun"]!))))
-//            }
-//        }
     }
 }
