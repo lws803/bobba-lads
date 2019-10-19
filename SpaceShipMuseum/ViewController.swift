@@ -69,8 +69,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
             if !hits.isEmpty{
                 let tappedNode = hits.first?.node
-                let settingStoryboard: UITableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "setting") as UITableViewController
-                self.present(settingStoryboard, animated: true, completion: nil)
+                if tappedNode?.name != "sun" {
+                    let settingStoryboard: UITableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "setting") as UITableViewController
+                    self.present(settingStoryboard, animated: true, completion: nil)
+                } else {
+                    let triviaStoryboard: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "trivia") as UIViewController
+                    self.present(triviaStoryboard, animated: true, completion: nil)
+                }
             }
         }
     }

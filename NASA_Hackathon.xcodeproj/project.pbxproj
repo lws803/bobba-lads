@@ -16,6 +16,7 @@
 		BA06792F235B2B7600567A41 /* MainscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA06792E235B2B7600567A41 /* MainscreenViewController.swift */; };
 		BA067931235B743000567A41 /* PlanetSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA067930235B743000567A41 /* PlanetSettingViewController.swift */; };
 		BA067933235B7D4E00567A41 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */; };
+		C86F9E23235BA0BD002B48B9 /* TriviaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86F9E22235BA0BD002B48B9 /* TriviaViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		BA06792E235B2B7600567A41 /* MainscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainscreenViewController.swift; sourceTree = "<group>"; };
 		BA067930235B743000567A41 /* PlanetSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetSettingViewController.swift; sourceTree = "<group>"; };
 		BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		C86F9E22235BA0BD002B48B9 /* TriviaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				527951D120CC07A000B9119D /* ViewController.swift */,
 				BA067930235B743000567A41 /* PlanetSettingViewController.swift */,
 				527951D320CC07A000B9119D /* Main.storyboard */,
+				C86F9E22235BA0BD002B48B9 /* TriviaViewController.swift */,
 				BA067932235B7D4E00567A41 /* SettingsTableViewController.swift */,
 				BA06792E235B2B7600567A41 /* MainscreenViewController.swift */,
 				527951D620CC07A100B9119D /* Assets.xcassets */,
@@ -149,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA06792F235B2B7600567A41 /* MainscreenViewController.swift in Sources */,
+				C86F9E23235BA0BD002B48B9 /* TriviaViewController.swift in Sources */,
 				BA067933235B7D4E00567A41 /* SettingsTableViewController.swift in Sources */,
 				527951D220CC07A000B9119D /* ViewController.swift in Sources */,
 				527951CE20CC07A000B9119D /* AppDelegate.swift in Sources */,
