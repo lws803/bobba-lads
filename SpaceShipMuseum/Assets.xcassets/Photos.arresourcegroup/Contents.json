@@ -5,7 +5,10 @@
   },
   "resources" : [
     {
-      "filename" : "ship.arreferenceimage"
+      "filename" : "moon.arreferenceimage"
+    },
+    {
+      "filename" : "sun.arreferenceimage"
     }
   ]
 }
