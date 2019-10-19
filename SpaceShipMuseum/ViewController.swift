@@ -9,7 +9,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodeAngles : [String: Double] = ["earth": 0]
     var refPositions : [String: SCNVector3] = [:]
     var cameraPosition = SCNVector3()
-    
+    var selectedElements : [Int: Dictionary<String, String>] = [:]
     
     @IBOutlet var sceneView: ARSCNView!
     
@@ -47,6 +47,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Run the view's session
         sceneView.session.run(configuration)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,6 +57,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
+    func reload() {
+        print(selectedElements)
+    }
+    
     // MARK: - GestureRecogniser
     @objc func handleTap(rec: UITapGestureRecognizer){
         if rec.state == .ended {
