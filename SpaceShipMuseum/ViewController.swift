@@ -178,7 +178,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 }
                 
                 if (imageAnchor.name != "sun") {
-                    let temp = 45 // TODO: inverse square law
+                    var temp = 0 // TODO: inverse square law
+                    if (nodePositions["sun"] != nil) {
+                        let planetDistance = GLKVector3Distance(
+                            SCNVector3ToGLKVector3(refPositions[imageAnchor.name! + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
+                        )
+                        temp = Int(1000/pow(planetDistance, 2))
+                    }
                     var detail = ""
                     for (_, element) in selectedElements {
                         var state = ""
