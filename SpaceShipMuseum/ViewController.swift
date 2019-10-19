@@ -4,7 +4,7 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     // TODO: Store a global set of planet positions, to be parsed and used to update the planet nodes
-    
+    var planetNames = ["earth", "saturn"]
     var curr_time = 0
     var nodePositions: [String : SCNVector3] = [:]
     var nodeAngles : [String: Double] = ["moon": 0]
@@ -105,16 +105,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             frame.camera.transform.columns.3.z
         )
     }
+    
+    func setNewPosition (planetName: String, constant: Float) {
+        let planetDistance = GLKVector3Distance(
+            SCNVector3ToGLKVector3(refPositions[planetName + "_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
+        ) - 0.1
+        let rotationalRadians = sqrt(constant/planetDistance)
+        nodeAngles[planetName]! += Double(rotationalRadians)
+        nodePositions[planetName]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles[planetName]!))
+        nodePositions[planetName]!.y = nodePositions["sun"]!.y + planetDistance * Float(sin(nodeAngles[planetName]!))
+    }
 
 
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         // Each plane will only contain a single node
-//        print(node.childNodes[0].childNodes[0].name)
         let currNode = node.childNodes[0].childNodes[0]
         let refNode = node.childNodes[0]
-//        if (currNode.name == "moon") {
-//            currNode.runAction(SCNAction.move(by: SCNVector3Make(0.1, 0, 0), duration: 30))
-//        }
+
         curr_time += 1
         
         if currNode.name != nil {
@@ -127,21 +134,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         if currNode.name != nil && currNode.name! == "moon" {
             if nodePositions["sun"] != nil {
-                let planetDistance = GLKVector3Distance(
-                    SCNVector3ToGLKVector3(refPositions["moon_plane"]!), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
-                ) - 0.2
-                
-                let rotationalRadians = sqrt(0.00172665/planetDistance)
-//                let cameraDistance = GLKVector3Distance(
-//                    SCNVector3ToGLKVector3(cameraPosition), SCNVector3ToGLKVector3(refPositions["sun_plane"]!)
-//                )
+                setNewPosition(planetName: "moon", constant: 0.00172665)
 
-                nodeAngles["moon"]! += Double(rotationalRadians)
-                // TODO: Rely on factor and planetDistance
-//                print (log2(planetDistance*10))
-
-                nodePositions["moon"]!.x = nodePositions["sun"]!.x + planetDistance * Float(cos(nodeAngles["moon"]!))
-                nodePositions["moon"]!.y = nodePositions["sun"]!.y + planetDistance * Float(sin(nodeAngles["moon"]!))
                 currNode.worldPosition = nodePositions["moon"]!
                 currNode.worldPosition.z = nodePositions["sun"]!.z
             }
@@ -151,11 +145,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
         }
 
-        if curr_time % 10 == 0 {
-            if (nodePositions["moon"] != nil && nodePositions["sun"] != nil) {
+//        if curr_time % 10 == 0 {
+//            if (nodePositions["moon"] != nil && nodePositions["sun"] != nil) {
 //                print ("Distance:" + String(GLKVector3Distance(SCNVector3ToGLKVector3(nodePositions["moon"]!), SCNVector3ToGLKVector3(nodePositions["sun"]!))))
-            }
-        }
+//            }
+//        }
         if let imageAnchor = anchor as? ARImageAnchor {
             if !imageAnchor.isTracked {
                 currNode.isHidden = true
