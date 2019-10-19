@@ -92,6 +92,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             var planetNode: SCNNode?
             planetNode = planetScene.rootNode.childNodes[planetProps[imageAnchor.name!]!["index"]!]
             
+            // MARK: - TitleNode
             let title = "name: " + imageAnchor.name!
             let titleText = SCNText(string: title, extrusionDepth: 0.1)
             titleText.font = UIFont.systemFont(ofSize: 1)
@@ -107,6 +108,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planetNode!.position.z = 0.15
             planeNode.addChildNode(planetNode!)
             planeNode.addChildNode(titleNode)
+            
             node.addChildNode(planeNode)
         }
         
@@ -174,6 +176,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         // TODO: Hardcode it here
                     }
                 }
+                
+                if (imageAnchor.name != "sun") {
+                    let planetTemp = 45
+                    var detail = ""
+                    for (_, element) in selectedElements {
+                        detail += element["name"]! + "\n"
+                        detail += "boiling point: " + element["boiling"]! + "\n"
+                        detail += "melting point: " + element["melting"]! + "\n"
+                        detail += "\n"
+                    }
+                    let detailText = SCNText(string: detail, extrusionDepth: 0.1)
+                    detailText.font = UIFont.systemFont(ofSize: 1)
+                    detailText.flatness = 0.005
+                    let detailNode = SCNNode(geometry: detailText)
+                    let fontScale: Float = 0.01
+                    detailNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+                    detailNode.position = SCNVector3Zero
+                    detailNode.position.z  = 0.02
+                    detailNode.position.y = -0.1
+                    refNode.addChildNode(detailNode)
+                }
+                
 
             }
         }
