@@ -10,7 +10,7 @@ Swift: https://github.com/lws803/bobba-lads
 
 Backend: https://github.com/teojunjie/nasa-server
 
-Slides: https://docs.google.com/presentation/d/1x4tMuo3XZt...
+Slides: https://docs.google.com/presentation/d/1x4tMuo3XZtgoeGPTp8500r5-7EzfEJYV5o95tJlkemc/edit?usp=sharing
 
 Our team aims to educate children about space by making a highly interactive AR mobile app. With this app, users are able to spawn planetary objects on cards and have them interact with one another in the play space. Move the cards further away from each other and you will see the planet's orbit distance increase whilst slowing down its orbital rotation, vice versa. Users are also able to attach large varieties of compounds from our database on the planets and watch them change their states as you move them further away or closer to another planetary object.
 
